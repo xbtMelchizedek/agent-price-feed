@@ -87,6 +87,16 @@ The Pages workflow does this every 2 hours, 30 minutes after justweight rebuilds
 - It reads list prices, not your negotiated, cached or batch rates.
 - An event is about 0–2 hours behind the source page, plus Pages caching (about 10 minutes).
 
+## Part of the agent inference kit
+
+Small tools that each do one job and work together. Use any one on its own.
+
+- [justweight](https://github.com/xbtMelchizedek/justweight): one price table for every inference venue (Flop, Pearl, Venice, Chutes, each OpenRouter provider, local) in one unit, with each price linked to its source.
+- [justweight `infer`](https://github.com/xbtMelchizedek/justweight#infer-route-one-call-with-caps-and-a-receipt): an MCP tool that routes one call to the cheapest venue meeting your privacy floor, under hard spend caps, and returns chained receipts.
+- [agent-price-feed](https://github.com/xbtMelchizedek/agent-price-feed) (this repo): alerts by JSON Feed, RSS, CLI and MCP when those prices move, a cheaper route appears, or Flop lists a model.
+- [agent-spendcap](https://github.com/xbtMelchizedek/agent-spendcap): a budget policy for agents: holds before each call, settlement from real usage, a hash-chained ledger, and a drop-in fetch for OpenAI-compatible APIs.
+- [flop-receipt-root](https://github.com/xbtMelchizedek/flop-receipt-root): proves a Flop compute settlement to an EVM contract without a bridge, and checks one receipt offline.
+
 ## Develop
 
 `npm test` runs 10 tests on two real snapshots plus labelled synthetic edits (see `test/fixtures/README.md`). Dependencies: none. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
