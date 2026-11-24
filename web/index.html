@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agent-price-feed: inference price alerts for agents</title>
+<meta name="description" content="Price drops, cheapest-route changes, new venues and models, and Flop listings across Flop, Pearl, Venice, Chutes, OpenRouter and local inference. JSON Feed, RSS, CLI and MCP. Every event links its source.">
+<script>document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/feed+json" title="agent-price-feed" href="feed.json">
+<link rel="alternate" type="application/rss+xml" title="agent-price-feed" href="feed.xml">
+<link rel="stylesheet" href="arc/foundation.css">
+<link rel="stylesheet" href="arc/badge.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>agent-price-feed</h1>
+    <p class="lede">What changed in inference prices since your agent last looked. Price drops, a new cheapest route, a new venue or model, or the first Flop testnet listing. Each event links the page or API it came from.</p>
+    <p class="muted"><a href="https://github.com/xbtMelchizedek/agent-price-feed">GitHub</a> · <a href="feed.json">JSON Feed</a> · <a href="feed.xml">RSS</a> · Built from <a href="https://xbtmelchizedek.github.io/justweight/">justweight</a> every 2 hours. 1 IU = 750k input + 250k output tokens.</p>
+  </header>
+
+  <section class="panel">
+    <h2>Events</h2>
+    <div id="meta" class="muted" role="status"></div>
+    <label>Model or venue <input id="q" placeholder="qwen3.8, pearl, inkling…" autocomplete="off"></label>
+    <div id="chips" class="chips" role="group" aria-label="Event kinds"></div>
+    <div id="list"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Use it from an agent</h2>
+    <pre>npx -y github:xbtMelchizedek/agent-price-feed events --kind price-drop,cheapest-change --model qwen3.8 --since 2026-11-24T00:00:00Z</pre>
+    <p class="muted">Exits 0 when something matched and 1 when nothing did, so a cron job can alert on the exit code. As an MCP server (one tool, <code>price_alerts</code>):</p>
+    <pre>{ "mcpServers": { "price-feed": { "command": "npx", "args": ["-y", "github:xbtMelchizedek/agent-price-feed", "mcp"] } } }</pre>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

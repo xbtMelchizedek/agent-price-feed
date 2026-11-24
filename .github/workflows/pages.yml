@@ -1,0 +1,41 @@
+name: pages
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 30 minutes after justweight's 2-hourly rebuild (17 */2).
+    - cron: "47 */2 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm test
+      # Reads the previous state from the live site. If that read fails for any reason but 404, the build fails
+      # and the old site stays up: history is never reset by a flaky fetch.
+      - run: node src/cli.mjs build | tee -a "$GITHUB_STEP_SUMMARY"
+      - run: node scripts/build-web.mjs
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

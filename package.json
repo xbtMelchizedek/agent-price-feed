@@ -1,0 +1,21 @@
+{
+  "name": "agent-price-feed",
+  "version": "0.1.0",
+  "description": "Inference price alerts for AI agents: price drops, cheapest-route changes, new venues and models, and Flop listings across Flop, Pearl, Venice, Chutes, OpenRouter and local, as JSON Feed, RSS, a CLI and an MCP tool. Every event links its source.",
+  "keywords": ["agents", "inference", "llm", "prices", "alerts", "rss", "json-feed", "mcp", "openrouter", "flop", "bittensor", "venice"],
+  "homepage": "https://xbtmelchizedek.github.io/agent-price-feed/",
+  "repository": { "type": "git", "url": "git+https://github.com/xbtMelchizedek/agent-price-feed.git" },
+  "bugs": { "url": "https://github.com/xbtMelchizedek/agent-price-feed/issues" },
+  "author": "xbtMelchizedek",
+  "license": "MIT",
+  "type": "module",
+  "exports": { ".": "./src/index.mjs", "./package.json": "./package.json" },
+  "bin": { "agent-price-feed": "src/cli.mjs" },
+  "files": ["src", "README.md", "CHANGELOG.md", "LICENSE"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "build": "node src/cli.mjs build && node scripts/build-web.mjs",
+    "prepublishOnly": "npm test"
+  }
+}
